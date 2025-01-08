@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework_simplejwt.tokens import RefreshToken
-from library.models import Books, Author
+from library.models import Book, Author
 from users.models import User
 from django.contrib.auth.models import Group
 
@@ -61,7 +61,7 @@ class LibraryTestCase(APITestCase):
 
     def test_books_update(self):
         author = Author.objects.create(name='Автор_1')
-        book = Books.objects.create(name='Книга_первая', availability=True, genre='Приключение', author=author)
+        book = Book.objects.create(name='Книга_первая', availability=True, genre='Приключение', author=author)
         response = self.client.patch(
             f'/library/books/{book.pk}/update',
             data={'name': 'Книга_вторая',}
@@ -83,7 +83,7 @@ class LibraryTestCase(APITestCase):
 
     def test_book_delete(self):
         author = Author.objects.create(name='Автор_1')
-        book = Books.objects.create(name='Книга_первая', availability=True, genre='Приключение', author=author)
+        book = Book.objects.create(name='Книга_первая', availability=True, genre='Приключение', author=author)
         response = self.client.delete(
             f'/library/books/{book.pk}/delete/'
         )
@@ -94,7 +94,7 @@ class LibraryTestCase(APITestCase):
 
     def test_books_list(self):
         author = Author.objects.create(name='Автор_1')
-        book = Books.objects.create(name='Книга_первая', availability=True, genre='Приключение', author=author)
+        book = Book.objects.create(name='Книга_первая', availability=True, genre='Приключение', author=author)
         response = self.client.get(
             '/library/books/'
         )
