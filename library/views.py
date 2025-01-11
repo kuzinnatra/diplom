@@ -35,6 +35,13 @@ class BookUpdateApiView(UpdateAPIView):
     serializer_class = BookSerializer
     permission_classes = [IsLibrarian]
 
+    def perform_update(self, serializer):
+        if serializer.validated_data.get('user'):
+            is_available = False
+        else:
+            is_available = True
+        serializer.save(availability=is_available)
+
 
 class BookDestroyApiView(DestroyAPIView):
     queryset = Book.objects.all()

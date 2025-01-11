@@ -71,16 +71,6 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': os.getenv('NAME'), # Название БД
-#         'USER': os.getenv('USER'), # Пользователь для подключения
-#         'PASSWORD': os.getenv('PASSWORD'), # Пароль для этого пользователя
-#         'HOST': os.getenv('HOST'), # Адрес, на котором развернут сервер БД
-#         'PORT': os.getenv('PORT'), # Порт, на котором работает сервер БД
-#     }
-# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -130,6 +120,17 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'JWT [Bearer {JWT}]': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    },
+    'USE_SESSION_AUTH': False,
 }
 
 AUTH_USER_MODEL = 'users.User'

@@ -15,10 +15,20 @@ class UserCreateApiView(CreateAPIView):
         user.save()
 
 
+# class UserListApiView(ListAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+#     permission_classes = [IsLibrarian]
+
 class UserListApiView(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsLibrarian]
+    permission_classes = [IsOwner | IsLibrarian]
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if IsLibrarian().has_permission(self.request, self):
+            return qs
+        return qs.filter(id=self.request.user.id)
 
 
 class UserRetrieveApiView(RetrieveAPIView):
